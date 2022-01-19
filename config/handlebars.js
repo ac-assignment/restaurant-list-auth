@@ -1,4 +1,4 @@
-const { create } = require('express-handlebars')
+import { create } from 'express-handlebars'
 
 const hbs = create({
   defaultLayout: 'main',
@@ -10,4 +10,4 @@ const hbs = create({
   }
 })
 
-module.exports = hbs
+export default hbs

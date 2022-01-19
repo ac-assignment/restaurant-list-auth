@@ -1,5 +1,5 @@
-const express = require('express')
-const Restaurant = require('../../models/restaurant.js')
+import express from 'express'
+import Restaurant from '#models/restaurant.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
@@ -35,4 +35,4 @@ router.get('/search', async (req, res) => {
   }
 })
 
-module.exports = router
+export default router

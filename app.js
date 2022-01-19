@@ -1,11 +1,11 @@
-const express = require('express')
-const methodOverride = require('method-override')
-const router = require('./routes/index.js')
-const hbs = require('./config/handlebars.js')
-require('./config/mongoose.js')
+import express from 'express'
+import methodOverride from 'method-override'
+import router from '#routes/index.js'
+import hbs from '#config/handlebars.js'
+import '#config/mongoose.js'
 
 const app = express()
-const port = 3000
+const PORT = 3000
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
 app.use(router)
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Listening on http://localhost:${PORT}`)
 })

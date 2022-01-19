@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#config/*": ["./config/*"],
+      "#models/*": ["./models/*"],
+      "#routes/*": ["./routes/*"],
+      "#views/*": ["./routes/*"],
+    }
+  }
+}

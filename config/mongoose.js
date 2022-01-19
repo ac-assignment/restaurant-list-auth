@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 mongoose.connect('mongodb://localhost:27017/restaurant_list')
 const db = mongoose.connection
@@ -10,4 +10,4 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-module.exports = db
+export default db

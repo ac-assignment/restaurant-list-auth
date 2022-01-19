@@ -1,6 +1,6 @@
-const express = require('express')
-const isImageURL = require('image-url-validator').default
-const Restaurant = require('../../models/restaurant.js')
+import express from 'express'
+import { default as isImageURL } from 'image-url-validator'
+import Restaurant from '#models/restaurant.js'
 const router = express.Router()
 
 /* 新增餐廳頁面 */
@@ -76,4 +76,4 @@ router.delete('/restaurants/:id', async (req, res) => {
   }
 })
 
-module.exports = router
+export default router
