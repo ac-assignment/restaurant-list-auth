@@ -35,7 +35,7 @@ npm run seed
 - Express-Handlebars 6.0.1
 - Bootstrap 4.6.1
 - Font-awesome 5.8.1
-- MongoDB
+- MongoDB 5.0.4
 - mongoose 6.0.5
 - method-override 3.0.0
 - image-url-validator 1.0.4
