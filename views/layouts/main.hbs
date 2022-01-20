@@ -7,26 +7,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的餐廳清單</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/lib/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/layouts/main.css">
 </head>
 
 <body>
   <header>
     <nav class="navbar navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" href="/">
+        <a href="/" class="navbar-brand">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          我的餐廳清單
+          {{#if isAuthenticated}}{{user.name}}的{{/if}}餐廳清單
         </a>
+        {{#if isAuthenticated}}
+        <a href="/user/logout" class="btn btn-outline-success">登出</a>
+        {{else}}
+        <a href="/user/login" class="btn btn-outline-success">登入</a>
+        {{/if}}
       </div>
     </nav>
     <div class="banner"></div>
   </header>
-  {{{body}}}
-  <script src="/javascripts/jquery-3.6.0.min.js"></script>
-  <script src="/javascripts/popper.js"></script>
-  <script src="/javascripts/bootstrap.js"></script>
+  <main>
+    {{{body}}}
+  </main>
+  <script src="/javascripts/lib/jquery-3.6.0.min.js"></script>
+  <script src="/javascripts/lib/popper.js"></script>
+  <script src="/javascripts/lib/bootstrap.js"></script>
 </body>
 
 </html>

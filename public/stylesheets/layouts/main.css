@@ -35,15 +35,10 @@ header {
 }
 .form-control::placeholder {
   color: #aaaaaa;
-  font-size: 0.8rem;
 }
 .btn-major {
   background-color: #9b4b4b;
   color: white;
-}
-.form-control:focus {
-  box-shadow: none;
-  border-color: #ced4da;
 }
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);

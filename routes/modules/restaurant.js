@@ -4,12 +4,12 @@ import Restaurant from '#models/restaurant.js'
 const router = express.Router()
 
 /* 新增餐廳頁面 */
-router.get('/restaurants/create', async (req, res) => {
+router.get('/create', async (req, res) => {
   res.render('create', { isAgain: false })
 })
 
 /* 新增餐廳提交 */
-router.post('/restaurants', async (req, res) => {
+router.post('/', async (req, res) => {
   const entity = req.body
   try {
     const isImageValid = await isImageURL(entity.image)
@@ -25,7 +25,7 @@ router.post('/restaurants', async (req, res) => {
 })
 
 /* 編輯餐廳頁面 */
-router.get('/restaurants/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
   const { id } = req.params
   try {
     const entity = await Restaurant.findById(id).lean()
@@ -36,7 +36,7 @@ router.get('/restaurants/:id/edit', async (req, res) => {
 })
 
 /* 編輯餐廳提交 */
-router.put('/restaurants/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params
   const entity = req.body
   try {
@@ -55,7 +55,7 @@ router.put('/restaurants/:id', async (req, res) => {
 })
 
 /* 餐廳詳細資訊 */
-router.get('/restaurants/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const entity = await Restaurant.findById(id).lean()
@@ -66,7 +66,7 @@ router.get('/restaurants/:id', async (req, res) => {
 })
 
 /* 刪除餐廳 */
-router.delete('/restaurants/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params
   try {
     await Restaurant.findByIdAndDelete(id)
