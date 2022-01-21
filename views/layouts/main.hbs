@@ -16,8 +16,8 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container">
         <a href="/" class="navbar-brand">
-          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          {{#if isAuthenticated}}{{user.name}}的{{/if}}餐廳清單
+          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30" height="30" class="d-inline-block align-top mr-1" alt="我的餐廳清單">
+          {{#if isAuthenticated}}{{user.name}} 的{{/if}}餐廳清單
         </a>
         {{#if isAuthenticated}}
         <a href="/user/logout" class="btn btn-outline-success">登出</a>

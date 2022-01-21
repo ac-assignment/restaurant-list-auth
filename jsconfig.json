@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "#config/*": ["./config/*"],
+      "#middleware/*": ["./middleware/*"],
       "#models/*": ["./models/*"],
       "#routes/*": ["./routes/*"],
       "#views/*": ["./routes/*"],
