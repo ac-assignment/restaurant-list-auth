@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
   try {
     const isImageValid = await isImageURL(entity.image)
     if (isImageValid) {
+      entity.userId = req.user._id
       await Restaurant.create(entity)
       res.redirect('/')
     } else {
@@ -26,9 +27,10 @@ router.post('/', async (req, res) => {
 
 /* 編輯餐廳頁面 */
 router.get('/:id/edit', async (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const { id: _id } = req.params
   try {
-    const entity = await Restaurant.findById(id).lean()
+    const entity = await Restaurant.findOne({ _id, userId }).lean()
     res.render('edit', { entity, isAgain: false })
   } catch (error) {
     console.log(error)
@@ -37,15 +39,16 @@ router.get('/:id/edit', async (req, res) => {
 
 /* 編輯餐廳提交 */
 router.put('/:id', async (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const { id: _id } = req.params
   const entity = req.body
   try {
     const isImageValid = await isImageURL(entity.image)
     if (isImageValid) {
-      await Restaurant.findByIdAndUpdate(id, entity)
+      await Restaurant.findOneAndUpdate({ _id, userId }, entity)
       res.redirect('/')
     } else {
-      entity._id = id
+      entity._id = _id
       entity.image = null
       res.render('edit', { entity, isAgain: true })
     }
@@ -56,9 +59,10 @@ router.put('/:id', async (req, res) => {
 
 /* 餐廳詳細資訊 */
 router.get('/:id', async (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const { id: _id } = req.params
   try {
-    const entity = await Restaurant.findById(id).lean()
+    const entity = await Restaurant.findOne({ _id, userId }).lean()
     res.render('detail', { entity })
   } catch (error) {
     console.log(error)
@@ -67,9 +71,10 @@ router.get('/:id', async (req, res) => {
 
 /* 刪除餐廳 */
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params
+  const userId = req.user._id
+  const { id: _id } = req.params
   try {
-    await Restaurant.findByIdAndDelete(id)
+    await Restaurant.findOneAndDelete({ _id, userId })
     res.redirect('/')
   } catch (error) {
     console.log(error)

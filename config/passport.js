@@ -1,7 +1,7 @@
 import passport from 'passport'
-import LocalStrategy from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { Strategy as FacebookStrategy } from 'passport-facebook'
 import bcrypt from 'bcryptjs'
-import FacebookStrategy from 'passport-facebook'
 import User from '#models/user.js'
 
 export default (app) => {
@@ -32,9 +32,30 @@ export default (app) => {
       }
     }
   ))
-  // passport.use(new FacebookStrategy({
-    
-  // }))
+  passport.use(new FacebookStrategy({
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: process.env.FACEBOOK_APP_CALLBACK,
+      profileFields: ['email', 'displayName']
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const { email, name } = profile._json
+      try {
+        const existUser = await User.findOne({ email })
+        if (existUser) {
+          return done(null, existUser)
+        }
+        
+        const randomPassword = Math.random().toString(36).slice(-8)
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(randomPassword, salt)
+        const user = await User.create({ name, email, password: hash })
+        done(null, user)
+      } catch (error) {
+        done(error, false)
+      }
+    }
+  ))
   //序列化/反序列化
   passport.serializeUser((user, done) => {
     done(null, user._id)
