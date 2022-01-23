@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   try {
     const isImageValid = await isImageURL.default(entity.image)
     if (isImageValid) {
-      entity.userId = req.user._id
+      entity.user_id = req.user._id
       await Restaurant.create(entity)
       res.redirect('/')
     } else {
@@ -27,10 +27,10 @@ router.post('/', async (req, res) => {
 
 /* 編輯餐廳頁面 */
 router.get('/:id/edit', async (req, res) => {
-  const userId = req.user._id
+  const user_id = req.user._id
   const { id: _id } = req.params
   try {
-    const entity = await Restaurant.findOne({ _id, userId }).lean()
+    const entity = await Restaurant.findOne({ _id, user_id }).lean()
     res.render('edit', { entity, isAgain: false })
   } catch (error) {
     console.log(error)
@@ -39,13 +39,13 @@ router.get('/:id/edit', async (req, res) => {
 
 /* 編輯餐廳提交 */
 router.put('/:id', async (req, res) => {
-  const userId = req.user._id
+  const user_id = req.user._id
   const { id: _id } = req.params
   const entity = req.body
   try {
     const isImageValid = await isImageURL.default(entity.image)
     if (isImageValid) {
-      await Restaurant.findOneAndUpdate({ _id, userId }, entity)
+      await Restaurant.findOneAndUpdate({ _id, user_id }, entity)
       res.redirect('/')
     } else {
       entity._id = _id
@@ -59,10 +59,10 @@ router.put('/:id', async (req, res) => {
 
 /* 餐廳詳細資訊 */
 router.get('/:id', async (req, res) => {
-  const userId = req.user._id
+  const user_id = req.user._id
   const { id: _id } = req.params
   try {
-    const entity = await Restaurant.findOne({ _id, userId }).lean()
+    const entity = await Restaurant.findOne({ _id, user_id }).lean()
     res.render('detail', { entity })
   } catch (error) {
     console.log(error)
@@ -71,10 +71,10 @@ router.get('/:id', async (req, res) => {
 
 /* 刪除餐廳 */
 router.delete('/:id', async (req, res) => {
-  const userId = req.user._id
+  const user_id = req.user._id
   const { id: _id } = req.params
   try {
-    await Restaurant.findOneAndDelete({ _id, userId })
+    await Restaurant.findOneAndDelete({ _id, user_id })
     res.redirect('/')
   } catch (error) {
     console.log(error)

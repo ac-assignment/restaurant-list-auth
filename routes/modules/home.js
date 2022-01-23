@@ -3,8 +3,9 @@ import Restaurant from '#models/restaurant.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
+  const user_id = req.user._id
   try {
-    const entityList = await Restaurant.find().lean()
+    const entityList = await Restaurant.find({ user_id }).lean()
     res.render('index', { entityList })
   } catch (error) {
     console.log(error)
@@ -12,6 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/search', async (req, res) => {
+  const user_id = req.user._id
   const keyword = req.query.keyword.trim()
   const { sort } = req.query
   const sortOptions = {
@@ -22,9 +24,11 @@ router.get('/search', async (req, res) => {
   }
   try {
     const selector = {
-      $or: [
-        { name: RegExp(keyword, 'i') },
-        { category: RegExp(keyword, 'i') }
+      $and: [
+        { user_id },
+        {
+          $or: [{ name: RegExp(keyword, 'i') }, { category: RegExp(keyword, 'i') }]
+        }
       ]
     }
     const entityList = await Restaurant.find(selector).sort(sortOptions[sort]).lean()

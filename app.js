@@ -14,16 +14,16 @@ const PORT = process.env.PORT
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set("views", "./views")
+app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: false }))
-app.use(methodOverride('_method'))
-app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
 usePassport(app)
+app.use(flash())
 app.use(viewData)
 app.use(router)
 

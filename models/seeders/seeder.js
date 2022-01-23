@@ -4,25 +4,34 @@ import db from '#config/mongoose.js'
 import Restaurant from '#models/restaurant.js'
 import User from '#models/user.js'
 
-const SEED_USER = {
-  name: 'root',
-  email: 'root@gmail.com',
-  password: '123'
-}
+const SEED_USERS = [{
+    name: 'user1',
+    email: 'user1@example.com',
+    password: '12345678',
+    restaurantList: [1,2,3]
+  }, {
+    name: 'user2',
+    email: 'user2@example.com',
+    password: '12345678',
+    restaurantList: [4,5,6]
+  }
+]
 
 db.once('open', async () => {
   try {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(SEED_USER.password, salt)
-    const user = await User.create({ ...SEED_USER, password: hash })
-    
     const data = await readFile(new URL('./restaurant.json', import.meta.url))
-    const restaurantList = JSON.parse(data).results
-    restaurantList.forEach((r) => {
-      r.userId = user._id
-    })
+    const restaurantRaw = JSON.parse(data).results
     
-    await Restaurant.insertMany(restaurantList)
+    for (const seedUser of SEED_USERS) {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(seedUser.password, salt)
+      const user = await User.create({ ...seedUser, password: hash })
+      
+      const restaurantForUser = restaurantRaw.filter(r => seedUser.restaurantList.includes(r.id))
+      restaurantForUser.forEach(r => r.user_id = user._id)
+      await Restaurant.insertMany(restaurantForUser)
+    }
+    
     console.log('done')
     process.exit()
   } catch (error) {
