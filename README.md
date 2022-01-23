@@ -11,6 +11,7 @@
 - 編輯餐廳
 - 刪除餐廳
 - 排序下拉選單
+- 使用者認證(一般註冊、Facebook登入)
 ## 開始使用
 1. clone專案
 2. 進入專案資料夾，安裝所需套件
@@ -26,16 +27,30 @@ npm run dev
 Listening on http://localhost:3000
 ```
 5. 產生種子資料
+
+| name  | email             | password  | restaurantList |
+|-------|-------------------|-----------|----------------|
+| user1 | user1@example.com | 12345678  | #1, #2, #3     |
+| user2 | user2@example.com | 12345678  | #4, #5, #6     |
+
 ```bash
 npm run seed
 ```
-## 開發工具
+## 環境
 - Node.js 14.17.6
-- Express 4.17.1
-- Express-Handlebars 6.0.1
+- MongoDB 5.0.4
+## 開發工具
+- express 4.17.1
+- express-handlebars 6.0.1
+- express-session 1.17.2
+- passport 0.5.2
+- passport-local 1.0.0
+- passport-facebook 3.0.0
+- bcryptjs 2.4.3
+- method-override 3.0.0
+- connect-flash 0.1.1
+- image-url-validator 1.0.4
+- dotenv 14.2.0
+- mongoose 6.0.5
 - Bootstrap 4.6.1
 - Font-awesome 5.8.1
-- MongoDB 5.0.4
-- mongoose 6.0.5
-- method-override 3.0.0
-- image-url-validator 1.0.4
