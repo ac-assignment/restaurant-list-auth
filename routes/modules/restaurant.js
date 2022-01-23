@@ -1,5 +1,5 @@
 import express from 'express'
-import { default as isImageURL } from 'image-url-validator'
+import isImageURL from 'image-url-validator'
 import Restaurant from '#models/restaurant.js'
 const router = express.Router()
 
@@ -12,7 +12,7 @@ router.get('/create', async (req, res) => {
 router.post('/', async (req, res) => {
   const entity = req.body
   try {
-    const isImageValid = await isImageURL(entity.image)
+    const isImageValid = await isImageURL.default(entity.image)
     if (isImageValid) {
       entity.userId = req.user._id
       await Restaurant.create(entity)
@@ -43,7 +43,7 @@ router.put('/:id', async (req, res) => {
   const { id: _id } = req.params
   const entity = req.body
   try {
-    const isImageValid = await isImageURL(entity.image)
+    const isImageValid = await isImageURL.default(entity.image)
     if (isImageValid) {
       await Restaurant.findOneAndUpdate({ _id, userId }, entity)
       res.redirect('/')
