@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-const restaurantSchema = new mongoose.Schema({
+const restaurantSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',

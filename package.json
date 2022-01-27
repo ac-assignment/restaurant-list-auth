@@ -11,10 +11,10 @@
     "seed": "node -r dotenv/config models/seeders/seeder.js"
   },
   "imports": {
-    "#config/*": "./config/*",
+    "#configs/*": "./configs/*",
     "#middleware/*": "./middleware/*",
     "#models/*": "./models/*",
-    "#routes/*": "./routes/*",
+    "#routers/*": "./routers/*",
     "#views/*": "./views/*"
   },
   "keywords": [],

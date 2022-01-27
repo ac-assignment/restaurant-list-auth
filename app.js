@@ -2,11 +2,11 @@ import express from 'express'
 import session from 'express-session'
 import methodOverride from 'method-override'
 import flash from 'connect-flash'
-import hbs from '#config/handlebars.js'
-import usePassport from '#config/passport.js'
+import hbs from '#configs/handlebars.js'
+import usePassport from '#configs/passport.js'
 import viewData from '#middleware/viewData.js'
-import router from '#routes/index.js'
-import '#config/mongoose.js'
+import router from '#routers/index.js'
+import '#configs/mongoose.js'
 
 const app = express()
 const PORT = process.env.PORT
@@ -26,6 +26,10 @@ usePassport(app)
 app.use(flash())
 app.use(viewData)
 app.use(router)
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+})
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`)

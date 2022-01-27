@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { readFile } from 'fs/promises'
-import db from '#config/mongoose.js'
+import db from '#configs/mongoose.js'
 import Restaurant from '#models/restaurant.js'
 import User from '#models/user.js'
 
@@ -33,8 +33,9 @@ db.once('open', async () => {
     }
     
     console.log('done')
-    process.exit()
   } catch (error) {
     console.log(error)
+  } finally {
+    process.exit()
   }
 })

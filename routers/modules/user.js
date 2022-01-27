@@ -48,7 +48,6 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-  
 })
 router.get('/logout', (req, res) => {
   req.logout()

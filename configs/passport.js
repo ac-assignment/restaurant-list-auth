@@ -36,7 +36,8 @@ export default (app) => {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: process.env.FACEBOOK_APP_CALLBACK,
-      profileFields: ['email', 'displayName']
+      enableProof: true,
+      profileFields: ['email', 'displayName'],
     },
     async (accessToken, refreshToken, profile, done) => {
       const { email, name } = profile._json
@@ -50,22 +51,22 @@ export default (app) => {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(randomPassword, salt)
         const user = await User.create({ name, email, password: hash })
-        done(null, user)
+        return done(null, user)
       } catch (error) {
-        done(error, false)
+        return done(error, false)
       }
     }
   ))
   //序列化/反序列化
   passport.serializeUser((user, done) => {
-    done(null, user._id)
+    return done(null, user._id)
   })
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id).lean()
-      done(null, user)
+      return done(null, user)
     } catch (error) {
-      done(error, false)
+      return done(error, false)
     }
   })
 }

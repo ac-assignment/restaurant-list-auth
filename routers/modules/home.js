@@ -8,11 +8,11 @@ router.get('/', async (req, res) => {
     const entityList = await Restaurant.find({ user_id }).lean()
     res.render('index', { entityList })
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 
-router.get('/search', async (req, res) => {
+router.get('/search', async (req, res, next) => {
   const user_id = req.user._id
   const keyword = req.query.keyword.trim()
   const { sort } = req.query
@@ -24,18 +24,17 @@ router.get('/search', async (req, res) => {
   }
   try {
     const selector = {
-      $and: [
-        { user_id },
-        {
-          $or: [{ name: RegExp(keyword, 'i') }, { category: RegExp(keyword, 'i') }]
-        }
+      user_id,
+      $or: [
+        { name: RegExp(keyword, 'i') },
+        { category: RegExp(keyword, 'i') }
       ]
     }
     const entityList = await Restaurant.find(selector).sort(sortOptions[sort]).lean()
     const isNoResult = entityList.length === 0
     res.render('index', { entityList, keyword, sort, isNoResult })
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 })
 

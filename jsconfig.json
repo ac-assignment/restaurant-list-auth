@@ -3,11 +3,11 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "#config/*": ["./config/*"],
+      "#configs/*": ["./configs/*"],
       "#middleware/*": ["./middleware/*"],
       "#models/*": ["./models/*"],
-      "#routes/*": ["./routes/*"],
-      "#views/*": ["./routes/*"],
+      "#routers/*": ["./routers/*"],
+      "#views/*": ["./views/*"],
     }
   }
 }
